@@ -10,9 +10,6 @@ const SignupForm = () => {
         return localData ? JSON.parse(localData) : {username: "", password: ""}
     });
     const [ char, setChar ] = useState({checkUser: "", checkPassword: ""})
-    // const [checkUser, setCheckUser] = useState(true)
-    // const [checkPassword, setCheckPassword] = useState(true)
-    
     useEffect(() => {
         return ()=> {
             allUsers.push(user)
@@ -23,13 +20,13 @@ const SignupForm = () => {
     const validate = () => {
         let checkUser = ""
         let checkPassword = ""
-
-        if(user.username.length < 5){
-             checkUser = "username should be atleast 5 characters or more!"
+        
+        if(user.username){
+             checkUser = user.username.length < 5 ? "username should be atleast 5 characters or more!": ""
         }
 
-        if(user.password.length < 8){
-             checkPassword = "password should be atleast 8 characters or more!"
+        if(user.password){
+             checkPassword = user.password.length < 8 ? "password should be atleast 8 characters or more!": ""
         }
 
         if(user){
@@ -54,9 +51,12 @@ const SignupForm = () => {
         validate()
     }
 
-    signup = (user.username.length < 5 || user.password.length < 8 ? <input className="input-btn" type="submit" 
-    value="Sign up"/> : <Link to="/"><input className="input-btn" type="submit" 
-    value="Sign up"/></Link>)
+    if(user.username && user.password){
+        signup = (
+            user.username.length < 5 || user.password.length < 8 ? <input className="input-btn" type="submit" value="Sign up"/> : <Link to="/"><input className="input-btn" type="submit" 
+            value="Sign up"/></Link>
+        )
+    }
 
     return(
         <div className="signup__form-container">
